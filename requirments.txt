@@ -1,4 +1,5 @@
-streamlit>=1.45,<2
-python-docx>=1.1,<2
-Faker>=37,<39
-pandas>=2.2,<3
+Faker
+streamlit
+pandas
+python-docx
+altair
