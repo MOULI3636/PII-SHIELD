@@ -2,69 +2,51 @@
 
 Enterprise-Style Document Privacy & PII Redaction Platform
 
-Detect → Classify → Replace → Validate → Export
+<p align="center">
+
+<strong>{=html}Detect → Classify → Replace → Validate → Review →
+Export</strong>{=html}
+
+</p>
+
+<p align="center">
+
+A Streamlit-based DOCX privacy platform for detecting PII, generating
+consistent synthetic replacements, validating sanitized documents, and
+reviewing results through an interactive dashboard.
+
+</p>
+
+📌 Overview
 
 PII Shield is a document privacy application designed to identify
 Personally Identifiable Information (PII) inside Microsoft Word
-(.docx) documents, replace detected values with consistent synthetic
-values, validate the sanitized document, and provide an interactive
-interface for reviewing the results.
+(.docx) documents.
 
-The project combines a Python redaction engine with a Streamlit
-web interface so that document sanitization can be performed without
-manually editing the source document.
+It combines:
+
+deterministic PII detection,
+
+contextual heuristics,
+
+synthetic replacement,
+
+post-redaction validation,
+
+interactive review,
+
+audit information, and
+
+downloadable sanitized documents.
+
+The goal is to make document sanitization repeatable, inspectable, and
+verifiable.
 
 ✨ Why PII Shield?
 
-Sensitive information can appear throughout business documents in
-paragraphs, tables, headers, and footers. Manually finding and removing
-these values is slow, inconsistent, and difficult to audit.
+Sensitive information can appear in:
 
-PII Shield automates the workflow:
-
-DOCX Document
-      │
-      ▼
-Document Structure Analysis
-      │
-      ▼
-PII Detection
-      │
-      ├── Person / Name
-      ├── Email
-      ├── Phone
-      ├── Address
-      ├── DOB / Date
-      ├── SSN
-      ├── Credit Card
-      ├── IP Address
-      └── Company
-      │
-      ▼
-Entity Classification
-      │
-      ▼
-Synthetic Replacement
-      │
-      ▼
-Redacted DOCX
-      │
-      ▼
-Post-Redaction Validation
-      │
-      ▼
-Interactive Report + Downloads
-
-🚀 Key Features
-
-1. DOCX PII Detection
-
-Upload a Microsoft Word document and analyze its contents for
-potentially sensitive information.
-
-The processing pipeline can work across:
-
-Document paragraphs
+Paragraphs
 
 Tables
 
@@ -72,37 +54,56 @@ Headers
 
 Footers
 
-This is important because sensitive information is not necessarily
-stored only in normal paragraph text.
+Manually searching for these values is slow and difficult to audit.
 
-2. Multiple PII Categories
+PII Shield automates the complete workflow:
 
-The detector layer supports pattern/context-based detection for
-categories such as:
+DOCX Document
+      ↓
+Document Structure Analysis
+      ↓
+PII Detection
+      ↓
+Entity Classification
+      ↓
+Synthetic Replacement
+      ↓
+Redacted DOCX
+      ↓
+Post-Redaction Validation
+      ↓
+Interactive Review
+      ↓
+Export
 
-Category          Example
+🚀 Key Features
 
-PERSON / Name   John Smith
-EMAIL           john.smith@example.com
-PHONE           +91 9876543210
-DOB / Date      15/08/1990
-SSN             123-45-6789
-CREDIT_CARD     4111 1111 1111 1111
-IP_ADDRESS      192.168.1.25
-ADDRESS         123 Example Road, Pune
-COMPANY         ABC Technologies Limited
+1. 📄 DOCX PII Detection
 
-Detection is designed around deterministic patterns and contextual
-heuristics rather than requiring a large external AI model.
+Analyzes Microsoft Word documents across paragraphs, tables, headers,
+and footers.
 
-3. Consistent Synthetic Replacement
+2. 🔐 Multiple PII Categories
 
-Detected values are not simply deleted.
+Category        Example
 
-PII Shield generates replacement values so that the sanitized document
-remains readable.
+PERSON        John Smith
+EMAIL         john.smith@example.com
+PHONE         +91 9876543210
+DOB           15/08/1990
+SSN           123-45-6789
+CREDIT_CARD   4111 1111 1111 1111
+IP_ADDRESS    192.168.1.25
+ADDRESS       123 Example Road, Pune
+COMPANY       ABC Technologies Limited
 
-Example:
+Detection uses deterministic patterns and contextual heuristics without
+requiring a large external AI model.
+
+3. 🔄 Consistent Synthetic Replacement
+
+Detected values are replaced with synthetic values instead of simply
+being deleted.
 
 Original:
 John Smith contacted john.smith@example.com.
@@ -110,48 +111,26 @@ John Smith contacted john.smith@example.com.
 Redacted:
 Rahul Kapoor contacted rahul.kapoor@example.com.
 
-The replacement approach is designed to preserve document usability
-while removing the original sensitive value.
+This keeps the sanitized document readable while removing the original
+sensitive values.
 
-4. Post-Redaction Validation
+4. 🧪 Post-Redaction Validation
 
-A major part of the project is the second scan.
+The redacted document is scanned again.
 
-After creating the redacted document, the system checks the sanitized
-result again.
-
-Original Document
-       │
-       ▼
-PII Detection
-       │
-       ▼
-Replacement
-       │
-       ▼
 Redacted Document
-       │
-       ▼
+       ↓
 Second Detection Scan
-       │
        ├── 0 remaining → PASSED
-       │
        └── Remaining → REVIEW
 
-This makes the system more than a simple find-and-replace script.
+This validation loop is one of the main differentiators of the project.
 
-🖥️ Interactive Web Application
+🖥️ Interactive Streamlit Dashboard
 
-PII Shield includes a Streamlit interface designed as an
-enterprise-style privacy dashboard.
+The application provides a structured privacy workspace.
 
-Main workspace
-
-The application provides:
-
-Overview
-
-The main dashboard provides:
+🏠 Overview
 
 DOCX upload
 
@@ -173,11 +152,11 @@ Detection breakdown
 
 Validation status
 
-Redacted document download
+Redacted DOCX download
 
-Detection Explorer
+🔍 Detection Explorer
 
-Provides a detailed view of detected entities:
+Review detected entities with:
 
 Type      Original             Replacement             Start   End
 
@@ -185,19 +164,17 @@ EMAIL     original@email.com   synthetic@email.com       120   142
 PHONE     +91 XXXXXXXX         +91 XXXXXXXX              350   363
 COMPANY   ABC Limited          XYZ Industries            600   613
 
-The results can also be exported as CSV.
+Detection results can also be exported as CSV.
 
-Before / After
+🔄 Before / After
 
-Provides a direct comparison between:
+Compare:
 
 Original Value
-       ↓
+      ↓
 Synthetic Replacement
 
-This makes the replacement process transparent.
-
-Validation
+🧪 Validation
 
 Displays:
 
@@ -207,11 +184,11 @@ Remaining entities
 
 Validation status
 
-Remaining entity records when manual review is required
+Remaining records requiring review
 
-Audit Log
+📋 Audit Log
 
-Records important processing events such as:
+Records events such as:
 
 Document uploaded
 
@@ -227,43 +204,39 @@ Post-redaction validation completed
 
 🧠 System Architecture
 
-                         ┌──────────────────────┐
-                         │     Streamlit UI     │
-                         │       app.py         │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │  Redaction Engine    │
-                         │ redaction_engine.py  │
-                         └──────────┬───────────┘
-                                    │
-                     ┌──────────────┴──────────────┐
-                     ▼                             ▼
-             ┌────────────────┐           ┌────────────────┐
-             │ PII Detectors  │           │ DOCX Processor │
-             │  detectors.py  │           │                │
-             └───────┬────────┘           └───────┬────────┘
-                     │                             │
-                     └──────────────┬──────────────┘
-                                    ▼
-                         ┌──────────────────────┐
-                         │ Synthetic Replacement│
-                         └──────────┬───────────┘
-                                    ▼
-                         ┌──────────────────────┐
-                         │ Validation / Re-scan │
-                         └──────────┬───────────┘
-                                    ▼
-                         ┌──────────────────────┐
-                         │ Redacted DOCX + JSON │
-                         └──────────────────────┘
+                    ┌──────────────────────┐
+                    │     Streamlit UI     │
+                    │       app.py         │
+                    └──────────┬───────────┘
+                               ↓
+                    ┌──────────────────────┐
+                    │  Redaction Engine    │
+                    │ redaction_engine.py  │
+                    └──────────┬───────────┘
+                               ↓
+                 ┌─────────────┴─────────────┐
+                 ↓                           ↓
+        ┌────────────────┐          ┌────────────────┐
+        │ PII Detectors  │          │ DOCX Processor │
+        │  detectors.py  │          │                │
+        └───────┬────────┘          └───────┬────────┘
+                └─────────────┬─────────────┘
+                              ↓
+                    ┌──────────────────────┐
+                    │ Synthetic Replacement│
+                    └──────────┬───────────┘
+                               ↓
+                    ┌──────────────────────┐
+                    │ Validation / Re-scan │
+                    └──────────┬───────────┘
+                               ↓
+                    ┌──────────────────────┐
+                    │ Redacted DOCX + JSON │
+                    └──────────────────────┘
 
 📁 Project Structure
 
-Recommended repository structure:
-
-PII-Redaction-Tool/
+pii-shield/
 │
 ├── app.py
 ├── main.py
@@ -275,139 +248,40 @@ PII-Redaction-Tool/
 ├── README.md
 ├── .gitignore
 │
-├── input/
-│   └── sample.docx
+├── .streamlit/
+│   └── config.toml
 │
 └── output/
-    ├── redacted_prospectus.docx
-    └── detection_report.json
+    └── .gitkeep
 
 File Responsibilities
 
-app.py
+File                                Responsibility
 
-The Streamlit presentation layer.
+app.py                            Streamlit UI, navigation,
+dashboard, downloads
 
-Responsible for:
+main.py                           Command-line execution
 
-Upload interface
+redaction_engine.py               Core DOCX processing pipeline
 
-Navigation
+detectors.py                      PII detection and classification
 
-Dashboard
+evaluator.py                      Evaluation/reporting
 
-Detection Explorer
+test_detectors.py                 Detector verification
 
-Before / After review
+requirements.txt                  Python dependencies
 
-Validation report
-
-Audit log
-
-Downloads
-
-Visual styling
-
-It calls the redaction engine instead of implementing the core redaction
-logic itself.
-
-main.py
-
-Command-line execution layer.
-
-Useful when the application needs to be executed without the Streamlit
-UI.
-
-Typical workflow:
-
-Input DOCX
-   ↓
-main.py
-   ↓
-Redaction
-   ↓
-Output DOCX
-   ↓
-Detection report
-
-redaction_engine.py
-
-Core document-processing layer.
-
-Responsible for connecting:
-
-DOCX parsing
-
-Detection
-
-Entity processing
-
-Replacement
-
-Validation
-
-Output generation
-
-The Streamlit application calls:
-
-redact_docx_bytes(...)
-
-to process an uploaded document.
-
-detectors.py
-
-Detection layer.
-
-Contains the logic/patterns used to identify potential PII categories.
-
-Typical detection concepts include:
-
-Regular expressions
-
-Pattern validation
-
-Contextual heuristics
-
-Entity classification
-
-evaluator.py
-
-Evaluation/reporting utility.
-
-Used to evaluate detection output and validate generated reports.
-
-test_detectors.py
-
-Detector verification script.
-
-Used to check whether the detector layer can identify representative PII
-examples such as:
-
-John Smith
-john.smith@example.com
-+91 9876543210
-15/08/1990
-123-45-6789
-4111 1111 1111 1111
-192.168.1.25
-123 Example Road, Pune
-ABC Technologies Limited
-
-🔄 End-to-End Processing Flow
+🔄 End-to-End Processing
 
 Step 1 --- Upload
 
-The user uploads:
+The user uploads a .docx document.
 
-document.docx
+Step 2 --- Read
 
-through the Streamlit interface.
-
-Step 2 --- Read the document
-
-The engine reads the DOCX structure.
-
-It processes:
+The engine analyzes:
 
 Paragraphs
 Tables
@@ -416,174 +290,122 @@ Footers
 
 Step 3 --- Detect
 
-Detector patterns search the document for potential PII.
+PII patterns search the document.
 
-For example:
+Examples:
 
 EMAIL_PATTERN
 PHONE_PATTERN
 
-and other category-specific detection rules.
-
 Step 4 --- Classify
 
-Every detected value is represented as an entity containing information
-such as:
+Each detection is represented with information such as:
 
 Type
-Original Value
-Start Position
-End Position
+
+Original value
+
+Start position
+
+End position
 
 Step 5 --- Replace
 
-The system generates a synthetic replacement.
-
-Conceptually:
+A synthetic replacement is generated.
 
 Original Entity
-       │
-       ▼
+      ↓
 Entity Type
-       │
-       ▼
+      ↓
 Replacement Generator
-       │
-       ▼
+      ↓
 Synthetic Entity
 
-Step 6 --- Create the redacted document
+Step 6 --- Create Redacted DOCX
 
-The original DOCX is transformed into a sanitized DOCX.
-
-Example:
-
-input/
-    original.docx
-
-output/
-    PII_Shield_Redacted_original.docx
+original.docx
+      ↓
+PII Shield
+      ↓
+PII_Shield_Redacted_original.docx
 
 Step 7 --- Validate
 
-The sanitized content is scanned again.
-
-If:
+The sanitized document is scanned again.
 
 remaining_count == 0
+        ↓
+     PASSED
 
-the validation status is:
+remaining_count > 0
+        ↓
+      REVIEW
 
-PASSED
+Step 8 --- Report
 
-Otherwise:
-
-REVIEW
-
-Step 8 --- Generate reports
-
-The application exposes:
+The application provides:
 
 Redacted DOCX
+
 Detection results
+
 Validation result
+
 Audit information
+
 CSV export
 
 🛠️ Technology Stack
 
-Technology                     Purpose
+Technology                Purpose
 
-Python                         Core application language
-Streamlit                      Interactive web interface
-Pandas                         Result processing and tabular data
-Altair                         Detection visualization
-python-docx                    DOCX document processing
-Regular Expressions            Pattern-based PII detection
-JSON                           Detection/report serialization
-PyTest / Python test scripts   Detector verification
+Python                Core application
+Streamlit             Interactive web interface
+Pandas                Tabular result processing
+Altair                Visualization
+python-docx           DOCX processing
+Regular Expressions   Pattern-based detection
+JSON                  Detection/report serialization
 
 ⚙️ Installation
 
-1. Clone the repository
+1. Clone the Repository
 
-git clone https://github.com/YOUR_USERNAME/PII-Redaction-Tool.git
-cd PII-Redaction-Tool
+git clone https://github.com/YOUR_USERNAME/pii-shield.git
+cd pii-shield
 
-Replace YOUR_USERNAME with your GitHub username.
-
-2. Create a virtual environment
+2. Create a Virtual Environment
 
 Windows
 
 python -m venv venv
-
-Activate:
-
 .\venv\Scripts\Activate.ps1
 
-If PowerShell blocks activation:
-
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-
-Then activate again:
-
-.\venv\Scripts\Activate.ps1
-
-3. Install dependencies
+3. Install Dependencies
 
 pip install -r requirements.txt
 
-▶️ Run the Application
+▶️ Running the Application
 
-Start the Streamlit interface:
+Streamlit UI
 
 streamlit run app.py
 
-Then open the local URL shown by Streamlit, normally:
+Open:
 
 http://localhost:8501
 
-💻 Run Without the UI
-
-For command-line processing:
+Command Line
 
 python main.py
 
-The CLI workflow can generate:
-
-output/redacted_prospectus.docx
-output/detection_report.json
-
-🧪 Run Detector Tests
-
-Run:
+Detector Tests
 
 python test_detectors.py
 
-A successful detector test should report the expected entity categories
-and a total number of detected test entities.
+🔐 Privacy & Security
 
-📊 Example Processing Result
-
-For a large DOCX document, the application can report statistics such
-as:
-
-PII Detected       343
-PII Types            5
-Paragraphs        1006
-Tables               76
-Processing        X.X s
-
-The exact values depend on the uploaded document and detector rules.
-
-🔐 Privacy & Security Design
-
-PII Shield is designed around a simple principle:
-
-Do not expose the original sensitive value unnecessarily.
-
-The application focuses on:
+PII Shield focuses on:
 
 Deterministic detection
 
@@ -595,180 +417,91 @@ Post-redaction validation
 
 Auditable processing results
 
-For production deployment, additional controls should be added before
-handling real confidential documents.
+Important: Do not upload real confidential documents to a public
+deployment without appropriate security controls.
 
 ⚠️ Limitations
 
-PII detection is not equivalent to perfect privacy assurance.
+PII detection is not a perfect privacy guarantee.
 
-Pattern-based systems can produce:
+False Positives
 
-False positives
+A value can match a pattern without actually being PII.
 
-A value may match a pattern but not actually be PII.
-
-Example:
-
-123-45-6789
-
-may match an SSN pattern even when used as dummy data.
-
-False negatives
+False Negatives
 
 PII may be missed when:
 
-Formatting is unusual
+text is embedded in images,
 
-Information is embedded in images
+text is represented as shapes,
 
-Text is represented as shapes
+formatting is unusual,
 
-The document uses uncommon structures
-
-A value does not match an existing detector pattern
+a value does not match an implemented detector.
 
 Therefore:
 
-Validation PASSED
+Validation PASSED means that no remaining PII was detected by the
+implemented rules. It does not mathematically guarantee that every
+possible sensitive value has been removed.
 
-should be interpreted as:
+🌟 What Makes PII Shield Different?
 
-No remaining PII was detected by the implemented detection rules.
-
-It does not mathematically guarantee that every possible sensitive
-value has been removed.
-
-🌟 What Makes This Project Different?
-
-Instead of presenting the project as only:
-
-"Regex that replaces PII"
-
-PII Shield is structured as a complete privacy workflow:
+The project is designed as a complete privacy workflow rather than a
+simple regex replacement script.
 
 Detection
-   +
+    +
 Classification
-   +
-Consistent Synthetic Replacement
-   +
+    +
+Synthetic Replacement
+    +
 Validation
-   +
+    +
 Auditability
-   +
+    +
 Interactive Review
-   +
+    +
 Export
 
-The important differentiator is the post-redaction validation loop.
+⭐ Core Differentiator
 
-The system does not simply assume that replacement succeeded.
+The system does not simply assume that redaction succeeded.
 
-It checks again.
+It performs a second scan of the sanitized document and reports whether
+detectable PII remains.
 
 🚀 Future Enhancements
 
-Potential next versions could include:
+Planned possibilities include:
 
-1. Confidence Scores
+🎯 Confidence scores
 
-Example:
+🖼️ OCR-based PII detection
 
-EMAIL       99%
-PHONE       98%
-ADDRESS     86%
-PERSON      78%
+📑 PDF support
 
-This would allow users to prioritize manual review.
+📊 XLSX / CSV support
 
-2. OCR-Based PII Detection
+⚙️ Custom organization-specific PII rules
 
-Detect PII inside scanned documents and images.
+🛡️ Strict / Balanced / Minimal redaction policies
 
-Possible pipeline:
+📈 Analytics dashboard
 
-Image
-  ↓
-OCR
-  ↓
-Extracted Text
-  ↓
-PII Detection
-  ↓
-Redaction
-
-3. PDF Support
-
-Extend processing from:
-
-DOCX
-
-to:
-
-PDF
-TXT
-CSV
-XLSX
-
-4. Custom PII Rules
-
-Allow administrators to define organization-specific patterns.
-
-Example:
-
-EMPLOYEE_ID
-CUSTOMER_ID
-POLICY_NUMBER
-INTERNAL_ACCOUNT_ID
-
-5. Redaction Policies
-
-Create configurable policies such as:
-
-Strict
-Balanced
-Minimal
-
-A strict policy could detect more potential PII at the cost of
-additional false positives.
-
-6. Analytics Dashboard
-
-Track:
-
-Documents processed
-PII entities detected
-Most common PII category
-Validation pass rate
-Average processing time
-
-7. Enterprise Audit Export
-
-Generate:
-
-JSON
-CSV
-PDF
-
-audit reports for compliance workflows.
+📋 JSON / CSV / PDF audit exports
 
 ☁️ Deployment
 
-The Streamlit interface can be deployed to a cloud platform capable of
-running Python applications.
-
-Typical deployment flow:
+Typical deployment architecture:
 
 GitHub Repository
-       │
-       ▼
+       ↓
 Cloud Deployment
-       │
-       ▼
+       ↓
 Streamlit Application
-       │
-       ▼
+       ↓
 Public / Restricted URL
 
 Before deploying confidential documents, review:
@@ -787,100 +520,38 @@ Storage configuration
 
 Organization privacy requirements
 
-Do not use a public deployment for real confidential documents without
-appropriate security controls.
+🧹 GitHub Security
 
-🧹 .gitignore
+Use a .gitignore such as:
 
-Create a .gitignore file:
-
-# Virtual environment
 venv/
 .venv/
 
-# Python
 __pycache__/
 *.py[cod]
 
-# Streamlit
 .streamlit/secrets.toml
 
-# Generated output
 output/*
 !output/.gitkeep
 
-# Local input documents
 input/*
 !input/.gitkeep
 
-# Environment files
 .env
 .env.*
 
-# IDE
 .vscode/
 .idea/
 
-# OS
 .DS_Store
 Thumbs.db
 
-Important: Do not commit real confidential documents to GitHub.
+Never commit real confidential source documents to GitHub.
 
-📦 Recommended requirements.txt
+🧪 Testing Checklist
 
-Your requirements file should contain the packages actually used by the
-project, for example:
-
-streamlit
-pandas
-altair
-python-docx
-
-If your existing detector implementation requires additional packages,
-keep those dependencies in the file as well.
-
-Install with:
-
-pip install -r requirements.txt
-
-🔬 Testing Strategy
-
-The project can be tested at multiple levels.
-
-Detector testing
-
-python test_detectors.py
-
-CLI processing
-
-python main.py
-
-UI testing
-
-streamlit run app.py
-
-Then verify:
-
-DOCX upload
-
-Analyze button
-
-Detection Explorer
-
-Before / After
-
-Validation
-
-Audit Log
-
-Redacted DOCX download
-
-CSV download
-
-📋 Project Checklist
-
-Before submission, verify:
+Before publishing:
 
 app.py runs
 
@@ -896,13 +567,13 @@ Synthetic replacement works
 
 Redacted DOCX opens correctly
 
-Validation page works
+Detection Explorer works
 
-Detection Explorer shows results
+Before / After works
 
-Before / After shows replacements
+Validation works
 
-Audit Log records processing
+Audit Log works
 
 DOCX download works
 
@@ -912,15 +583,9 @@ requirements.txt is updated
 
 .gitignore exists
 
-No confidential input documents are committed
-
-README is included
-
-Repository contains only final project files
+No confidential documents are committed
 
 🧩 Project Philosophy
-
-PII Shield follows a simple privacy engineering workflow:
 
 Identify
    ↓
@@ -932,9 +597,9 @@ Verify
    ↓
 Report
 
-The goal is not merely to hide text.
+The objective is not merely to hide text.
 
-The goal is to create a repeatable, inspectable, and verifiable
+The objective is to create a repeatable, inspectable, and verifiable
 document sanitization workflow.
 
 👨‍💻 Author
@@ -949,22 +614,16 @@ Data Science / Data Analytics Focus
 This project is intended for educational, portfolio, and demonstration
 purposes unless a separate license is provided.
 
-⭐ If you find this project useful
+⭐ Project Status
 
-Consider giving the repository a ⭐ on GitHub and sharing feedback or
-improvements.
+Item             Status
 
-Project Status
+Version          v1.0
+Status           Active Development
+Interface        Streamlit
+Primary Format   Microsoft Word DOCX
 
-Current version: v1.0
-
-Status: Active development
-
-Primary interface: Streamlit
-
-Primary document format: Microsoft Word DOCX
-
-Core workflow:
+Core Workflow
 
 Upload
   ↓
@@ -979,3 +638,10 @@ Validate
 Review
   ↓
 Export
+
+<p align="center">
+
+<strong>{=html}🛡️ PII Shield --- Document Privacy & Redaction
+Platform</strong>{=html}
+
+</p>
