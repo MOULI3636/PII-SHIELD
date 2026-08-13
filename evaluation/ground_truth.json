@@ -1,0 +1,50 @@
+{
+    "PERSON": [
+        "Sarthak Malvadkar",
+        "Kushal Subbayya Hegde",
+        "Pushpa Kushal Hegde",
+        "Rajesh Kushal Hegde",
+        "Rohit Kushal Hegde",
+        "Rakhi Girija Shetty",
+        "Lokesh Shah",
+        "Soumavo Sarkar",
+        "Kishan Rastogi",
+        "Abhijit Diwan",
+        "Shanti Gopalkrishnan"
+    ],
+
+    "EMAIL": [
+        "cs.connect@kshinternational.com",
+        "ksh.ipo@nuvama.com",
+        "customerservice.mb@nuvama.com",
+        "ksh@icicisecurities.com",
+        "customercare@icicisecurities.com",
+        "kshinternational.ipo@in.mpms.mufg.com"
+    ],
+
+    "PHONE": [
+        "+ 91 20 4505 3237",
+        "+91 22 40094400",
+        "+91 22 6807 7100",
+        "+91 81081 14949"
+    ],
+
+    "COMPANY": [
+        "KSH International Limited",
+        "Nuvama Wealth Management Limited",
+        "ICICI Securities Limited",
+        "MUFG Intime India Private Limited",
+        "Kirtane & Pandit LLP",
+        "CARE Analytics and Advisory Private Limited"
+    ],
+
+    "ADDRESS": [
+        "Registered Office: 11/3, 11/4 and 11/5, Village Birdewadi, Chakan Taluka - Khed, Pune – 410 501, Maharashtra, India",
+        "Corporate Office: 201, Tower 2, Montreal Business Centre, Off Pallod Farms, Baner, Pune – 411 045, Maharashtra, India"
+    ],
+
+    "SSN": [],
+    "CREDIT_CARD": [],
+    "DOB": [],
+    "IP_ADDRESS": []
+}
