@@ -1,0 +1,4 @@
+streamlit==1.61.1
+pandas==3.0.5
+altair
+python-docx==1.2.0
